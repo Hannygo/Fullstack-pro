@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Modal, Button, Spinner } from "react-bootstrap";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { BiUser } from "react-icons/bi";
 
-import { AiOutlineClose, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import registerOptions from "../utils/formValidation";
 import { loginUser, registerUser } from "../config/api";
