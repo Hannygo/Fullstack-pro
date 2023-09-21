@@ -71,7 +71,7 @@ export default function ManageProduct() {
                 <td>
                   <Button
                     variant="danger"
-                    className="rounded-1 fw-medium "
+                    className="rounded-0 fw-medium w-100 "
                     onClick={() => handleDelete(product._id)}
                   >
                     DELETE

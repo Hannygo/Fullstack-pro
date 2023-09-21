@@ -2,22 +2,19 @@ import { useState } from "react";
 import { Modal, Button, Spinner } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { BiUser } from "react-icons/bi";
-
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import registerOptions from "../utils/formValidation";
 import { loginUser, registerUser } from "../config/api";
 import { toast } from "react-hot-toast";
 import { useStore } from "../config/store";
 
-
 export default function Account() {
   const [show, setShow] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  
   const [passwordShown, setPasswordShown] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -25,8 +22,8 @@ export default function Account() {
   } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
-  const { setCurrentUser } = useStore();
-  const from = location.state?.from || "/"; //to redirect user to home
+  const {setCurrentUser} = useStore()
+  const from = location.state?.from || "/"; //redirect user to home
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -35,6 +32,7 @@ export default function Account() {
   const switchMode = () => {
     setIsSignup(!isSignup);
   };
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -44,7 +42,7 @@ export default function Account() {
       if (isSignup) {
         const res = await registerUser(username, email, password);
         if (res.status === 201) {
-          setCurrentUser(res.data);
+          setCurrentUser(res.data)
           toast.success("Registration successfull");
           navigate(from, { replace: true });
           handleClose();
@@ -52,7 +50,7 @@ export default function Account() {
       } else {
         const res = await loginUser(username, password);
         if (res.status === 200) {
-          setCurrentUser(res.data);
+          setCurrentUser(res.data)
           toast.success("Login successfull");
           navigate(from, { replace: true });
           handleClose();
@@ -60,12 +58,11 @@ export default function Account() {
       }
     } catch (error) {
       console.log(error);
-      toast.error("invalid details");
+      toast.error("Invalid details");
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <>
       <BiUser style={{ cursor: "pointer" }} size="24px" onClick={handleShow} />
@@ -91,10 +88,11 @@ export default function Account() {
                   type="text"
                   placeholder="Username"
                   id="username"
+                  autoFocus
                   className="w-100 mb-0 inputReg"
                   {...register("username", registerOptions.username)}
                 />
-                {errors.username?.message && (
+                {errors?.username?.message && (
                   <span className="text-danger fs-6">
                     {errors.username.message}
                   </span>
@@ -109,7 +107,7 @@ export default function Account() {
                     className="w-100 mb-0 inputReg"
                     {...register("email", registerOptions.email)}
                   />
-                  {errors.email?.message && (
+                  {errors?.email?.message && (
                     <span className="text-danger fs-6">
                       {errors.email.message}
                     </span>
@@ -124,9 +122,21 @@ export default function Account() {
                   className="w-100 inputReg mb-0"
                   {...register("password", registerOptions.password)}
                 />
-                
+                {passwordShown ? (
+                  <AiFillEye
+                    className="position-absolute end-0 translate-middle"
+                    style={{ top: "50%", cursor: "pointer" }}
+                    onClick={togglePassword}
+                  />
+                ) : (
+                  <AiFillEyeInvisible
+                    className="position-absolute end-0 translate-middle"
+                    style={{ top: "50%", cursor: "pointer" }}
+                    onClick={togglePassword}
+                  />
+                )}
               </div>
-              {errors.password?.message && (
+              {errors?.password?.message && (
                 <span className="text-danger fs-6 mb-1 inputRegBox">
                   {errors.password.message}
                 </span>
@@ -151,7 +161,7 @@ export default function Account() {
                   type="button"
                   onClick={switchMode}
                 >
-                  Already have an account{" "}
+                  Already have an account?{" "}
                   <span className="text-black text-decoration-underline fs-5">
                     Sign in here
                   </span>
