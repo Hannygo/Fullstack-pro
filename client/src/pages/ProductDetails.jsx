@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import Loader from "../utils/Loader";
 import { PageLayout, ImageModal, ProductCard } from "../components";
 import { useState, useEffect, useReducer, useCallback } from "react";
-import { initialState, productReducer } from "../reducers/productReducer";
+import { initialState, productReducer } from "../reducers/ProductReducer";
 import {
   getOneProduct,
   getAllProducts,
